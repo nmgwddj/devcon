@@ -328,10 +328,13 @@ EXIT_xxxx
 					TCHAR devID[MAX_DEVICE_ID_LEN];
 					CM_Get_Device_ID(devInfo.DevInst, devID, MAX_DEVICE_ID_LEN, 0);
 
-					// step iCafe8 "Virtual Disk Bus Enumerator" device
-					if (_tcsicmp(buffer, _T("Virtual Disk Bus Enumerator")))
+					if (_tcsicmp(buffer, _T("Virtual Disk Bus Enumerator")) != 0 &&
+						_tcsstr(buffer, _T("iCafe8")) == NULL && 
+						_tcsstr(buffer, _T("S.T. Virtual SCSI Harddisk")) == NULL &&
+						_tcsstr(buffer, _T("Virtual SCSI Harddisk Controlller ")) && 
+						_tcsstr(buffer, _T("CGM Virtual Disk")))
 					{
-						// disable device
+						// disable devices
 						if (SetupDiSetClassInstallParams(devs, &devInfo, &pcp.ClassInstallHeader, sizeof(pcp)) &&
 							SetupDiCallClassInstaller(DIF_PROPERTYCHANGE, devs, &devInfo))
 						{
@@ -341,7 +344,11 @@ EXIT_xxxx
 						{
 							_tprintf(_T("Failed to disable %s, device is running.\n"), devID);
 						}
-
+					}
+					else
+					{
+						_tprintf(_T("Skip the device [%s], device id = [%s]"),
+							buffer, devID);
 					}
 
 					if (buffer) {

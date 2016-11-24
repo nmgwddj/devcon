@@ -1066,6 +1066,8 @@ Return Value:
     BOOL autoReboot = FALSE;
     DWORD flags = 0;
 
+	setlocale(LC_ALL, "CHS");
+
     //
     // syntax:
     //

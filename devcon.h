@@ -25,6 +25,7 @@ Abstract:
 #include <newdev.h>
 #include <objbase.h>
 #include <strsafe.h>
+#include <locale.h>
 
 #include "msg.h"
 #include "rc_ids.h"
