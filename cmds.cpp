@@ -331,8 +331,8 @@ EXIT_xxxx
 					if (_tcsicmp(buffer, _T("Virtual Disk Bus Enumerator")) != 0 &&
 						_tcsstr(buffer, _T("iCafe8")) == NULL && 
 						_tcsstr(buffer, _T("S.T. Virtual SCSI Harddisk")) == NULL &&
-						_tcsstr(buffer, _T("Virtual SCSI Harddisk Controlller ")) && 
-						_tcsstr(buffer, _T("CGM Virtual Disk")))
+						_tcsstr(buffer, _T("Virtual SCSI Harddisk Controlller")) == NULL && 
+						_tcsstr(buffer, _T("CGM Virtual")) == NULL)
 					{
 						// disable devices
 						if (SetupDiSetClassInstallParams(devs, &devInfo, &pcp.ClassInstallHeader, sizeof(pcp)) &&
