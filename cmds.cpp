@@ -288,7 +288,7 @@ EXIT_xxxx
 			// how many devices?
 			//
 			if (!devCount) {
-				FormatToStream(stdout, Machine ? MSG_LISTCLASS_HEADER_NONE : MSG_LISTCLASS_HEADER_NONE_LOCAL, className, classDesc, Machine);
+				// FormatToStream(stdout, Machine ? MSG_LISTCLASS_HEADER_NONE : MSG_LISTCLASS_HEADER_NONE_LOCAL, className, classDesc, Machine);
 			}
 			else {
 				// FormatToStream(stdout, Machine ? MSG_LISTCLASS_HEADER : MSG_LISTCLASS_HEADER_LOCAL, devCount, className, classDesc, Machine);
@@ -331,24 +331,26 @@ EXIT_xxxx
 					if (_tcsicmp(buffer, _T("Virtual Disk Bus Enumerator")) != 0 &&
 						_tcsstr(buffer, _T("iCafe8")) == NULL && 
 						_tcsstr(buffer, _T("S.T. Virtual SCSI Harddisk")) == NULL &&
-						_tcsstr(buffer, _T("Virtual SCSI Harddisk Controlller")) == NULL && 
+						_tcsstr(buffer, _T("Virtual SCSI Harddisk Controller")) == NULL && 
 						_tcsstr(buffer, _T("CGM Virtual")) == NULL)
 					{
 						// disable devices
 						if (SetupDiSetClassInstallParams(devs, &devInfo, &pcp.ClassInstallHeader, sizeof(pcp)) &&
 							SetupDiCallClassInstaller(DIF_PROPERTYCHANGE, devs, &devInfo))
 						{
-							_tprintf(_T("Disable %s\n"), devID);
+							_tprintf(_T("Disable %s\n"), buffer);
 						}
 						else
 						{
-							_tprintf(_T("Failed to disable %s, device is running.\n"), devID);
+							_tprintf(_T("Failed to disable %s, device is running.\n"), buffer);
 						}
 					}
 					else
 					{
-						_tprintf(_T("Skip the device [%s], device id = [%s]"),
+#if 0
+						_tprintf(_T("Skip the device [ %s ], device id [ %s ].\n"),
 							buffer, devID);
+#endif
 					}
 
 					if (buffer) {
@@ -1186,7 +1188,7 @@ Return Value:
     if(failcode == EXIT_OK) {
 
         if(!context.count) {
-            FormatToStream(stdout,MSG_FIND_TAIL_NONE_LOCAL);
+            // FormatToStream(stdout,MSG_FIND_TAIL_NONE_LOCAL);
         } else if(!context.reboot) {
             FormatToStream(stdout,MSG_DISABLE_TAIL,context.count);
         } else {
